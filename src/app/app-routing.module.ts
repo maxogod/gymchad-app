@@ -5,12 +5,12 @@ import { ActivityComponent } from './modules/activity/activity.component';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     component: HomeComponent,
     title: 'Gymchad - Home',
   },
   {
-    path: 'activity',
+    path: 'activity/:id',
     component: ActivityComponent,
     title: 'Gymchad - Activity',
   },
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
