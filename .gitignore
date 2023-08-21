@@ -37,6 +37,7 @@ yarn-error.log
 testem.log
 /typings
 TODO.txt
+Angular-Info.md
 
 # System files
 .DS_Store
