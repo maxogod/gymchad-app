@@ -38,6 +38,7 @@ testem.log
 /typings
 TODO.txt
 Angular-Info.md
+.env
 
 # System files
 .DS_Store

@@ -26,7 +26,7 @@ export class ActivityComponent {
         id: "64e3c2695122076a30ff01e5",
         name: "ex1fdfd 00ss",
         picture: "https://cdn.vox-cdn.com/thumbor/1tPy-AFZtQwS8O2EfSWnUS2vHjM=/138x0:2361x1667/1200x800/filters:focal(138x0:2361x1667)/cdn.vox-cdn.com/uploads/chorus_image/image/55908333/1_KzqzL4Fz0a224QKJn0aY4w.0.jpeg",
-        description: "some veeeery lonnggg descriptionnnnnnnnn",
+        description: "some veeeery lonnggg descriptionnnnnnnnn fdsfsdbahfhsdabf fdshjabfhsdafhsdbfbh d",
         sets: 0,
         reps: 0,
         time: 3
