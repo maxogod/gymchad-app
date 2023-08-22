@@ -1,16 +1,28 @@
 <div class="mb-4 pt-24 mx-10">
-  <h1 class="text-3xl font-bold text-red-400 underline opacity-70">
-    Hello {{ user.name }}!
-  </h1>
-  <h3 class="font-bold mt-3 text-red-400 underline opacity-70">
-    What are we hitting today?
-  </h3>
+  <div class="relative w-full">
+    <h1 class="text-3xl font-bold text-red-400 underline opacity-70">
+      Hello {{ user.name }}!
+    </h1>
+    <h3 class="font-bold mt-3 text-red-400 underline opacity-70">
+      What are we hitting today?
+    </h3>
+
+    <img
+      [src]="user.picture"
+      alt="User picture"
+      class="absolute right-0 border border-red-400 rounded-lg top-0 h-full aspect-square"
+    />
+
+    <button
+      class="absolute top-0 right-0 bg-white w-6 h-6 rounded-full"
+    ></button>
+  </div>
 
   <div class="mt-10 w-full flex flex-wrap justify-center gap-16">
     <div
       *ngFor="let activity of user.activities"
       routerLink="/activity/{{ activity.id }}"
-      class="bg-slate-300 relative border-4 border-red-400 w-72 h-72 rounded-md cursor-pointer"
+      class="bg-slate-300 relative border-4 border-red-400 w-60 h-60 rounded-md hover:drop-shadow-2xl brightness-75 hover:brightness-100 transition-all cursor-pointer"
     >
       <img
         [src]="activity.banner"
@@ -31,7 +43,11 @@
     </div>
 
     <div class="flex justify-center items-center">
-      <button class="text-3xl text-white w-24 h-24 bg-red-400 rounded-full">
+      <button
+        data-tooltip-target="tooltip-default"
+        type="button"
+        class="text-3xl text-white w-20 h-20 bg-red-400 hover:drop-shadow-2xl brightness-75 hover:brightness-100 transition-all rounded-full"
+      >
         +
       </button>
     </div>
