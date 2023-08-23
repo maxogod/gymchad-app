@@ -1,7 +1,7 @@
 <div class="mb-4 pt-24 mx-10">
   <div class="relative w-full">
     <h1 class="text-3xl font-bold text-red-400 underline opacity-70">
-      {{ user ? "Hello" + user.name : "Welcome" }}!
+      {{ user ? "Hello " + user.name : "Welcome" }}!
     </h1>
     <h3 class="font-bold mt-3 text-red-400 underline opacity-70">
       What are we hitting today?
@@ -20,10 +20,32 @@
     <button
       type="button"
       (click)="logoutOrLogin()"
-      class="absolute top-0 right-0 bg-slate-100 drop-shadow-2xl w-6 h-6 rounded-full flex items-center justify-center"
+      class="absolute top-0 right-0 flex items-center justify-center"
     >
-      <img *ngIf="!user" src="/assets/google-icon.svg" alt="G" />
-      <mat-icon *ngIf="user" class="font-bold text-red-400">logout</mat-icon>
+      <ng-container *ngIf="!user">
+        <div
+          id="g_id_onload"
+          [attr.data-client_id]="google_client_id"
+          data-context="signin"
+          data-ux_mode="popup"
+          data-callback="googleLogIn"
+          data-auto_prompt="false"
+        ></div>
+
+        <div
+          class="g_id_signin"
+          data-type="icon"
+          data-shape="circle"
+          data-theme="outline"
+          data-text="signin_with"
+          data-size="medium"
+        ></div>
+      </ng-container>
+      <mat-icon
+        *ngIf="user"
+        class="font-bold bg-slate-100 drop-shadow-2xl w-6 h-6 rounded-full text-red-400"
+        >logout</mat-icon
+      >
     </button>
   </div>
 

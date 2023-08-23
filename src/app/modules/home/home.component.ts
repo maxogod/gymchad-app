@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import User from 'src/app/models/user.model';
+import { UserService } from 'src/app/services/user.service';
+
+import { environment } from '../../../environments/environment.development'
 
 @Component({
   selector: 'app-home',
@@ -7,7 +11,9 @@ import User from 'src/app/models/user.model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  user: User | null = null
+  user: User | null = null;
+
+  google_client_id = environment.google_client_id;
 
   activityPlaceholder = [
     {
@@ -21,7 +27,24 @@ export class HomeComponent {
       link: 'https://github.com/maxogod/gymchad-app/issues'
     }
   ]
-  // user = {
+
+  // constructor(private userService: UserService) { }
+
+  // ngOnInit(): void {
+  //   this.user$ = this.userService.signup();
+  // }
+
+  logoutOrLogin() {
+    this.user ? this.logout() : this.login()
+  }
+
+  login() { }
+
+  logout() { }
+
+}
+
+// user = {
   //   name: 'max',
   //   email: 'max@gmail.com',
   //   picture: 'https://pm1.aminoapps.com/7518/09151b9c80012650c35e79028e23063472f6c739r1-981-984v2_uhq.jpg',
@@ -69,13 +92,3 @@ export class HomeComponent {
   //     },
   //   ]
   // }
-
-  logoutOrLogin() {
-    this.user ? this.logout() : this.login()
-  }
-
-  login() { }
-
-  logout() { }
-
-}

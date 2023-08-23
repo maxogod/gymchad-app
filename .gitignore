@@ -39,6 +39,7 @@ testem.log
 TODO.txt
 Angular-Info.md
 .env
+environments
 
 # System files
 .DS_Store

@@ -15,6 +15,18 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+
+    <script src="https://accounts.google.com/gsi/client" async></script>
+    <script>
+      function decodeJwtToken(token) {
+        return JSON.parse(atob(token.split(".")[1]));
+      }
+      function googleLogIn(res) {
+        const responsePayload = decodeJwtToken(res.credential);
+        sessionStorage.setItem("loggedUser", JSON.stringify(responsePayload));
+        console.log(responsePayload);
+      }
+    </script>
   </head>
   <body>
     <app-root></app-root>
