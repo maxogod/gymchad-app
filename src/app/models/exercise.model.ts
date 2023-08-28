@@ -1,9 +1,9 @@
 export default interface Exercise {
-    id: String;
-    name: String;
-    picture: String;
-    description: String;
-    sets: Number;
-    reps: Number;
-    time: Number;
+    id: string;
+    name: string;
+    picture: string;
+    description: string;
+    sets: number;
+    reps: number;
+    time: number;
 }

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import User from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
 import { environment } from '../../../environments/environment.development'
+import { ActivityService } from 'src/app/services/activity.service';
+import Activity from 'src/app/models/activity.model';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +13,16 @@ import { environment } from '../../../environments/environment.development'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  user: User | null = null;
 
-  google_client_id = environment.google_client_id;
+  public user$: Observable<User | null> = of(null);
 
-  activityPlaceholder = [
+  public isAddActivityOpen = false;
+
+  public isUpdateActivityOpen = false;
+
+  protected google_client_id = environment.google_client_id;
+
+  public activityPlaceholder = [
     {
       name: "Click the G next to the avatar to login",
       banner: "https://www.creativefabrica.com/wp-content/uploads/2020/02/13/Gym-Logo-Graphics-1-18.jpg",
@@ -28,67 +35,44 @@ export class HomeComponent {
     }
   ]
 
-  // constructor(private userService: UserService) { }
-
-  // ngOnInit(): void {
-  //   this.user$ = this.userService.signup();
-  // }
-
-  logoutOrLogin() {
-    this.user ? this.logout() : this.login()
+  constructor(private userService: UserService, private activityService: ActivityService) {
+    activityService.setToggleIsActivityFormOpenFn(this.toggleAddActivity.bind(this));
+    activityService.setToggleIsUpdateActivityOpenFn(this.toggleUpdateActivity.bind(this));
   }
 
-  login() { }
+  ngOnInit(): void {
+    this.user$ = this.userService.getUser();
 
-  logout() { }
+    this.userService.init();
+  }
 
+  public deleteActivity(activityId: string) {
+    this.activityService.deleteActivity(activityId);
+  }
+
+  public logoutOrLogin() {
+    this.user$.pipe(map(user => user)) ? this.logout() : this.login()
+  }
+
+  public login() { }
+
+  public logout() {
+    sessionStorage.removeItem('loggedUser');
+    this.user$ = of(null);
+    this.userService.logout();
+    window.location.reload();
+  }
+
+  public toggleAddActivity() {
+    this.isAddActivityOpen = !this.isAddActivityOpen;
+  }
+
+  public toggleUpdateActivity() {
+    this.isUpdateActivityOpen = !this.isUpdateActivityOpen;
+  }
+
+  public openUpdateActivity(activity: Activity) {
+    this.activityService.setActivity(activity);
+    this.toggleUpdateActivity();
+  }
 }
-
-// user = {
-  //   name: 'max',
-  //   email: 'max@gmail.com',
-  //   picture: 'https://pm1.aminoapps.com/7518/09151b9c80012650c35e79028e23063472f6c739r1-981-984v2_uhq.jpg',
-  //   activities: [
-  //     {
-  //       id: "64e3c2695122076a30ff01e6",
-  //       name: "first",
-  //       banner: "https://dotesports.com/wp-content/uploads/2022/06/30123010/Castelia_Gym_field.png",
-  //       exercises: [
-  //         {
-  //           id: "64e3c2695122076a30ff01e5",
-  //           name: "ex1",
-  //           picture: "some pic",
-  //           description: "some descrip",
-  //           sets: 1,
-  //           reps: 2,
-  //           time: 3
-  //         },
-  //         {
-  //           id: "64e3c2695122076a30ff01e5",
-  //           name: "ex1",
-  //           picture: "some pic",
-  //           description: "some descrip",
-  //           sets: 1,
-  //           reps: 2,
-  //           time: 3
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       id: "64e3c2695122076a30ff01e7",
-  //       name: "second",
-  //       banner: "https://static.fandomspot.com/images/12/11046/00-featured-misty-starmie-battle-in-gym.jpg",
-  //       exercises: [
-  //         {
-  //           id: "64e3c2695122076a30ff01e5",
-  //           name: "ex1",
-  //           picture: "some pic",
-  //           description: "some descrip",
-  //           sets: 1,
-  //           reps: 2,
-  //           time: 3
-  //         }
-  //       ]
-  //     },
-  //   ]
-  // }

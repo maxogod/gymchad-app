@@ -3,6 +3,7 @@
     <div class="bg-red-200 opacity-40 absolute inset-0 rounded-3xl"></div>
 
     <button
+      (click)="unsetActivity()"
       routerLink="/"
       class="z-10 bg-red-950 brightness-50 text-white flex items-center justify-center h-10 w-28 rounded-3xl opacity-50 hover:opacity-100 hover:drop-shadow-2xl transition-all"
     >
@@ -10,7 +11,11 @@
     </button>
 
     <div class="absolute w-full flex items-center justify-center">
-      <p class="text-white">Activity Name</p>
+      <p class="text-white">
+        {{
+          (activity$ | async) ? (activity$ | async)?.name : "Your Activities"
+        }}
+      </p>
     </div>
   </nav>
 </div>

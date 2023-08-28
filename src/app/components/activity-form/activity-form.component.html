@@ -1,0 +1,57 @@
+<div class="mt-10 w-full flex flex-wrap justify-center gap-16">
+  <form
+    (ngSubmit)="submit($event)"
+    class="bg-black drop-shadow-2xl rounded-xl p-5 w-96 sm:w-4/6 flex flex-col gap-5 relative"
+  >
+    <button (click)="toggleAddActivity()" class="absolute right-4 top-4">
+      <mat-icon class="text-red-400">close</mat-icon>
+    </button>
+    <ng-container *ngIf="!isAddExerciseOpen">
+      <label for="name">
+        <small class="text-white">Activity Name</small>
+        <input
+          type="text"
+          [(ngModel)]="name"
+          id="name"
+          name="name"
+          class="bg-black w-full border-b-2 border-red-400 text-white"
+          placeholder="Leg day"
+        />
+      </label>
+      <label for="banner">
+        <small class="text-white">Activity Banner</small>
+        <input
+          type="text"
+          [(ngModel)]="banner"
+          id="banner"
+          name="banner"
+          class="bg-black w-full border-b-2 border-red-400 text-white"
+          placeholder="https://buffedkitten.jpg"
+        />
+      </label>
+      <p class="text-sm text-white">Exercises: {{ exercises.length }}</p>
+    </ng-container>
+
+    <app-exersice-form *ngIf="isAddExerciseOpen"></app-exersice-form>
+
+    <p *ngIf="errors" class="text-red-500 text-sm">{{ errors }}</p>
+
+    <div class="flex gap-2">
+      <button
+        *ngIf="!isAddExerciseOpen"
+        (click)="toggleAddExercise()"
+        type="button"
+        class="bg-red-400 w-32 h-10 rounded-md text-white"
+      >
+        Add Exercises
+      </button>
+      <button
+        *ngIf="!isAddExerciseOpen"
+        type="submit"
+        class="bg-red-400 w-32 h-10 rounded-md text-white"
+      >
+        Done
+      </button>
+    </div>
+  </form>
+</div>

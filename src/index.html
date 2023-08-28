@@ -24,7 +24,7 @@
       function googleLogIn(res) {
         const responsePayload = decodeJwtToken(res.credential);
         sessionStorage.setItem("loggedUser", JSON.stringify(responsePayload));
-        console.log(responsePayload);
+        window.location.reload();
       }
     </script>
   </head>

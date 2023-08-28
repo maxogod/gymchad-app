@@ -3,13 +3,16 @@
     Exercises
   </h1>
 
-  <div class="mt-10 w-full flex flex-wrap justify-center gap-16">
+  <div
+    *ngIf="!isAddExerciseOpen && !isUpdateExerciseOpen"
+    class="mt-10 w-full flex flex-wrap justify-center gap-16"
+  >
     <div
       id="exercise"
-      *ngFor="let exercise of activity.exercises; let i = index"
+      *ngFor="let exercise of (activity$ | async)?.exercises; let i = index"
       (click)="toggleDetails(i)"
       class="bg-slate-300 relative border-4 border-red-400 {{
-        openedExercises[i] ? 'w-60 h-60' : 'w-40 h-40'
+        (openedExercises$ | async)?.[i] ? 'w-60 h-60' : 'w-40 h-40'
       }} rounded-md hover:drop-shadow-2xl brightness-75 hover:brightness-100 transition-all cursor-pointer overflow-hidden"
     >
       <img
@@ -26,13 +29,13 @@
         </p>
 
         <div
-          *ngIf="openedExercises[i] && exercise.description"
+          *ngIf="(openedExercises$ | async)?.[i] && exercise.description"
           class="bg-red-300 w-1/2 py-2 text-sm text-center rounded-lg opacity-80 overflow-x-hidden"
         >
           {{ exercise.description }}
         </div>
         <div
-          *ngIf="openedExercises[i]"
+          *ngIf="(openedExercises$ | async)?.[i]"
           class="bg-red-300 w-1/2 py-2 text-sm text-center rounded-lg opacity-80"
         >
           <p *ngIf="exercise.sets !== 0">
@@ -46,10 +49,16 @@
       </div>
 
       <div class="absolute top-0 left-2 flex gap-3">
-        <button>
+        <button
+          (click)="deleteExercise(exercise.id); $event.stopPropagation()"
+          class="z-20 cursor-default"
+        >
           <mat-icon class="text-red-400">delete</mat-icon>
         </button>
-        <button>
+        <button
+          (click)="openUpdateExercise(exercise); $event.stopPropagation()"
+          class="z-20 cursor-default"
+        >
           <mat-icon class="text-red-400">edit</mat-icon>
         </button>
       </div>
@@ -57,12 +66,37 @@
 
     <div class="flex justify-center items-center">
       <button
-        data-tooltip-target="tooltip-default"
+        (click)="openAddExercise()"
         type="button"
         class="text-3xl text-white w-16 h-16 bg-red-400 hover:drop-shadow-2xl brightness-75 hover:brightness-100 transition-all rounded-full"
       >
         +
       </button>
     </div>
+  </div>
+
+  <div
+    *ngIf="isAddExerciseOpen"
+    class="mt-10 w-full flex flex-wrap justify-center gap-16"
+  >
+    <form
+      class="bg-black drop-shadow-2xl rounded-xl p-5 w-96 sm:w-4/6 flex flex-col gap-5 relative"
+    >
+      <button (click)="closeForm()" class="absolute right-4 top-4">
+        <mat-icon class="text-red-400">close</mat-icon>
+      </button>
+      <app-exersice-form></app-exersice-form>
+    </form>
+  </div>
+
+  <div
+    *ngIf="isUpdateExerciseOpen"
+    class="mt-10 w-full flex flex-wrap justify-center gap-16"
+  >
+    <form
+      class="bg-black drop-shadow-2xl rounded-xl p-5 w-96 sm:w-4/6 flex flex-col gap-5 relative"
+    >
+      <app-update-exercise></app-update-exercise>
+    </form>
   </div>
 </div>

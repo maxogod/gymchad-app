@@ -1,0 +1,98 @@
+<div class="flex flex-col gap-5">
+  <label for="name">
+    <small class="text-white">Exercise Name</small>
+    <input
+      type="text"
+      [(ngModel)]="name"
+      id="name"
+      name="name"
+      class="bg-black w-full border-b-2 border-red-400 text-white"
+      placeholder="Red Fire"
+    />
+  </label>
+  <label for="picture">
+    <small class="text-white">Exercise Picture</small>
+    <input
+      type="text"
+      [(ngModel)]="picture"
+      id="picture"
+      name="picture"
+      picture
+      class="bg-black w-full border-b-2 border-red-400 text-white"
+      placeholder="https://buffedkitten.jpg"
+    />
+  </label>
+  <label for="description">
+    <small class="text-white">Exercise Description</small>
+    <input
+      type="text"
+      [(ngModel)]="description"
+      id="description"
+      name="description"
+      description
+      class="bg-black w-full border-b-2 border-red-400 text-white"
+      placeholder="exercise should be done at night"
+    />
+  </label>
+
+  <div>
+    <button
+      (click)="toggleSetsAndReps()"
+      type="button"
+      class="bg-red-400 w-24 h-6 rounded-md text-white"
+    >
+      {{ setsAndReps ? "Sets & Reps" : "Time" }}
+    </button>
+  </div>
+
+  <label *ngIf="setsAndReps" for="sets">
+    <small class="text-white">Sets</small>
+    <input
+      type="number"
+      [(ngModel)]="sets"
+      id="sets"
+      name="sets"
+      class="bg-black w-full border-b-2 border-red-400 text-white"
+    />
+  </label>
+  <label *ngIf="setsAndReps" for="reps">
+    <small class="text-white">Reps</small>
+    <input
+      type="number"
+      [(ngModel)]="reps"
+      id="reps"
+      name="reps"
+      class="bg-black w-full border-b-2 border-red-400 text-white"
+    />
+  </label>
+  <label *ngIf="!setsAndReps" for="time">
+    <small class="text-white">Duration</small>
+    <input
+      type="number"
+      [(ngModel)]="time"
+      id="time"
+      name="time"
+      class="bg-black w-full border-b-2 border-red-400 text-white"
+    />
+  </label>
+
+  <p *ngIf="errors" class="text-red-500 text-sm">{{ errors }}</p>
+
+  <div class="flex gap-2">
+    <button
+      (click)="onAddExercise()"
+      type="button"
+      class="bg-red-400 w-32 h-10 rounded-md text-white"
+    >
+      Add {{ name.substring(0, 8) }}{{ name.length > 8 ? "..." : "" }}
+    </button>
+
+    <button
+      (click)="onDiscardExercise()"
+      type="button"
+      class="bg-red-400 w-32 h-10 rounded-md text-white"
+    >
+      Discard
+    </button>
+  </div>
+</div>
