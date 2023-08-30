@@ -16,6 +16,8 @@ export class HomeComponent {
 
   public user$: Observable<User | null> = of(null);
 
+  public isLoading = true;
+
   public isAddActivityOpen = false;
 
   public isUpdateActivityOpen = false;
@@ -36,13 +38,14 @@ export class HomeComponent {
   ]
 
   constructor(private userService: UserService, private activityService: ActivityService) {
-    activityService.setToggleIsActivityFormOpenFn(this.toggleAddActivity.bind(this));
-    activityService.setToggleIsUpdateActivityOpenFn(this.toggleUpdateActivity.bind(this));
+    activityService.setToggleIsActivityFormOpenFn(this.closeForms.bind(this));
+    activityService.setToggleIsUpdateActivityOpenFn(this.closeForms.bind(this));
   }
 
   ngOnInit(): void {
     this.user$ = this.userService.getUser();
 
+    this.userService.setIsLoadingFn((isLoading: boolean) => this.isLoading = isLoading);
     this.userService.init();
   }
 
@@ -60,19 +63,19 @@ export class HomeComponent {
     sessionStorage.removeItem('loggedUser');
     this.user$ = of(null);
     this.userService.logout();
-    window.location.reload();
   }
 
-  public toggleAddActivity() {
-    this.isAddActivityOpen = !this.isAddActivityOpen;
+  public closeForms() {
+    this.isAddActivityOpen = false;
+    this.isUpdateActivityOpen = false;
   }
 
-  public toggleUpdateActivity() {
-    this.isUpdateActivityOpen = !this.isUpdateActivityOpen;
+  public openAddActivity() {
+    this.isAddActivityOpen = true;
   }
 
   public openUpdateActivity(activity: Activity) {
     this.activityService.setActivity(activity);
-    this.toggleUpdateActivity();
+    this.isUpdateActivityOpen = true;
   }
 }

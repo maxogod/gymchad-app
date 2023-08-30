@@ -12,6 +12,8 @@ export class ActivityService {
 
   private activity$ = new BehaviorSubject<Activity | null>(null);
 
+  private isLoadingFn: ((isLoading: boolean) => void) | undefined;
+
   private id: string = '';
 
   private toggleIsActivityFormOpenFn: (() => void) | undefined;
@@ -26,7 +28,12 @@ export class ActivityService {
     return this.activity$;
   }
 
+  public setIsLoadingFn(fn: ((isLoading: boolean) => void)): void {
+    this.isLoadingFn = fn;
+  }
+
   public initWithId(activityId: String): void {
+    this.isLoadingFn?.(true);
 
     const activity = this.userService.getUser().pipe(
       map(user => {
@@ -42,8 +49,8 @@ export class ActivityService {
       }
       this.activity$.next(activity);
       this.id = activity.id;
+      this.isLoadingFn?.(false);
     })
-
   }
 
   public addActivity(activity: Activity): Observable<Activity> {
@@ -54,7 +61,11 @@ export class ActivityService {
 
     return this.http.post<Activity>(
       url,
-      activity,
+      {
+        name: activity.name,
+        banner: activity.banner,
+        exercises: activity.exercises
+      },
       { headers });
   }
 
@@ -66,23 +77,26 @@ export class ActivityService {
 
     return this.http.put<Activity>(
       url,
-      activity,
+      {
+        name: activity.name,
+        banner: activity.banner,
+        exercises: activity.exercises
+      },
       { headers });
   }
 
   public deleteActivity(activityId: string): void {
     const url = `http://localhost:8080/api/activity/${activityId}`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
 
-    this.http.delete(
-      url,
-      { headers }).subscribe(
-        () => {
-          window.location.reload();
-        }
-      );
+    this.http.delete(url).subscribe((activity) => {
+      this.userService.deleteActivity(activityId)
+    }, (error) => {
+      if (error.status === 200) {
+        this.userService.deleteActivity(activityId)
+        return
+      }
+      alert("Something went wrong, please try again later.");
+    });
   }
 
   public addExercise(exercise: Exercise): Observable<Activity> {
@@ -103,8 +117,6 @@ export class ActivityService {
       },
       { headers });
   }
-
-
 
   public unsetActivity(): void {
     this.activity$.next(null);

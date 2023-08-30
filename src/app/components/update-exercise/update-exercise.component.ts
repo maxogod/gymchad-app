@@ -65,6 +65,8 @@ export class UpdateExerciseComponent {
       reps: this.reps,
       time: this.time
     });
+
+    this.onDiscardExercise(); // closes forms
   }
 
   onDiscardExercise() {

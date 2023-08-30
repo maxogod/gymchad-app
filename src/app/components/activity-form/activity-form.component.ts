@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import Exercise from 'src/app/models/exercise.model';
 import { ActivityService } from 'src/app/services/activity.service';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-activity-form',
@@ -24,6 +25,7 @@ export class ActivityFormComponent {
   constructor(
     private exerciseService: ExerciseService,
     private activityService: ActivityService,
+    private userService: UserService,
     private router: Router
   ) {
     exerciseService.setAddExerciseFn(this.addExercise.bind(this));
@@ -46,8 +48,10 @@ export class ActivityFormComponent {
     });
 
     newActivity$.subscribe((activity) => {
+      this.userService.addActivity(activity);
       this.router.navigate([`/activity/${activity.id}`]);
-      window.location.reload();
+    }, (error) => {
+      alert("There has been an error, please try again later");
     });
   }
 
@@ -57,7 +61,14 @@ export class ActivityFormComponent {
   }
 
   public addExercise(exercise: Exercise) {
-    this.exercises.push(exercise);
+    this.exercises.push({
+      name: exercise.name,
+      description: exercise.description,
+      picture: exercise.picture,
+      sets: exercise.sets,
+      reps: exercise.reps,
+      time: exercise.time
+    });
     this.toggleAddExercise();
   }
 

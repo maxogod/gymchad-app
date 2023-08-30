@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import Exercise from '../models/exercise.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ActivityService } from './activity.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,7 @@ export class ExerciseService {
 
   public exercise: Exercise | null = null;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   private addExerciseFn: ((exercise: Exercise) => void) | undefined;
 
@@ -45,16 +47,18 @@ export class ExerciseService {
 
   public deleteExercise(exerciseId: string): void {
     const url = `http://localhost:8080/api/exercise/${exerciseId}`;
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
 
-    this.http.delete(
-      url,
-      { headers }).subscribe(
-        () => {
-          window.location.reload();
-        });
+    this.http.delete(url).subscribe((activity) => {
+      const activityId = window.location.hash.split('/')[2];
+      this.userService.deleteExerciseFromActivity(activityId, exerciseId);
+    }, (error) => {
+      if (error.status === 200) {
+        const activityId = window.location.hash.split('/')[2];
+        this.userService.deleteExerciseFromActivity(activityId, exerciseId);
+        return;
+      }
+      alert("Something went wrong, please try again later.");
+    });
   }
 
   public updateExercise(exercise: Exercise): void {
@@ -66,10 +70,12 @@ export class ExerciseService {
     this.http.put(
       url,
       exercise,
-      { headers }).subscribe(
-        () => {
-          window.location.reload();
-        });
+      { headers }).subscribe((exercise) => {
+        const activityId = window.location.hash.split('/')[2];
+        this.userService.updateExerciseFromActivity(activityId, exercise as Exercise);
+      }, (error) => {
+        alert("Something went wrong, please try again later.");
+      });
   }
 
 }

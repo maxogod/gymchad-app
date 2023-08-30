@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { map } from 'rxjs';
 import { ActivityService } from 'src/app/services/activity.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-update-activity',
@@ -19,7 +20,7 @@ export class UpdateActivityComponent {
 
   public errors: string = '';
 
-  constructor(private activityService: ActivityService) { }
+  constructor(private activityService: ActivityService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.activity$.pipe(map(activity => activity)).subscribe((activity) => {
@@ -45,7 +46,10 @@ export class UpdateActivityComponent {
     });
 
     newActivity$.subscribe((activity) => {
-      window.location.reload();
+      this.userService.updateActivity(activity);
+      this.activityService.toggleIsUpdateActivityOpen();
+    }, (error) => {
+      alert("Something went wrong, please try again later.");
     });
   }
 

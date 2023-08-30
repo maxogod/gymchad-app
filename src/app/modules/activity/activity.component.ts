@@ -5,6 +5,7 @@ import Activity from 'src/app/models/activity.model';
 import Exercise from 'src/app/models/exercise.model';
 import { ActivityService } from 'src/app/services/activity.service';
 import { ExerciseService } from 'src/app/services/exercise.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-activity',
@@ -15,6 +16,8 @@ export class ActivityComponent {
 
   public activity$: Observable<Activity | null> = of(null);
 
+  public isLoading = true;
+
   public openedExercises$: Observable<boolean[]> = of([]);
 
   public isAddExerciseOpen = false;
@@ -24,6 +27,7 @@ export class ActivityComponent {
   constructor(
     private exerciseService: ExerciseService,
     private activityService: ActivityService,
+    private userService: UserService,
     private route: ActivatedRoute
   ) {
     this.exerciseService.setDiscardExerciseFn(this.closeForm.bind(this));
@@ -38,6 +42,7 @@ export class ActivityComponent {
       map(activity => Array(activity?.exercises.length).fill(false))
     )
 
+    this.activityService.setIsLoadingFn((isLoading: boolean) => this.isLoading = isLoading);
     this.route.params.subscribe(params => {
       this.activityService.initWithId(params['id']);
     })
@@ -55,7 +60,9 @@ export class ActivityComponent {
     const updatedActivity$ = this.activityService.addExercise(exercise);
 
     updatedActivity$.subscribe(activity => {
-      window.location.reload();
+      this.userService.updateActivity(activity);
+    }, (error) => {
+      alert('Something went wrong, please try again later');
     })
 
     this.closeForm();
@@ -66,7 +73,6 @@ export class ActivityComponent {
   }
 
   public deleteExercise(exerciseId: string) {
-    console.log(exerciseId);
     this.exerciseService.deleteExercise(exerciseId);
   }
 

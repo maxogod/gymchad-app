@@ -12,9 +12,7 @@
 
     <div class="absolute w-full flex items-center justify-center">
       <p class="text-white">
-        {{
-          (activity$ | async) ? (activity$ | async)?.name : "Your Activities"
-        }}
+        {{ activityName ? activityName : "Your Activities" }}
       </p>
     </div>
   </nav>
