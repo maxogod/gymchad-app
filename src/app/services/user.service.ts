@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment.development'
 
 import User from '../models/user.model';
 import { BehaviorSubject, Observable, catchError, of, tap, throwError } from 'rxjs';
@@ -31,7 +32,7 @@ export class UserService {
   public init(): void {
     this.isLoadingFn?.(true);
     this.http
-      .get<User>('http://localhost:8080/api/auth/session')
+      .get<User>(`${environment.domain}/api/auth/session`)
       .pipe(
         catchError((error: HttpErrorResponse) => {
           if (error.status === 401) {
@@ -57,7 +58,7 @@ export class UserService {
     if (!user) return of(null);
     const parsedUser = JSON.parse(user);
 
-    const url = `http://localhost:8080/api/auth/login`;
+    const url = `${environment.domain}/api/auth/login`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -74,7 +75,7 @@ export class UserService {
   }
 
   public logout(): void {
-    const url = `http://localhost:8080/api/auth/logout`;
+    const url = `${environment.domain}/api/auth/logout`;
 
     this.http.get(url).subscribe((user) => {
       this.user$.next(null);

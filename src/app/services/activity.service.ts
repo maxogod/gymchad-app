@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment.development'
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import Activity from '../models/activity.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -54,7 +55,7 @@ export class ActivityService {
   }
 
   public addActivity(activity: Activity): Observable<Activity> {
-    const url = `http://localhost:8080/api/activity/`;
+    const url = `${environment.domain}/api/activity/`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -70,7 +71,7 @@ export class ActivityService {
   }
 
   public updateActivity(activity: Activity): Observable<Activity> {
-    const url = `http://localhost:8080/api/activity/${activity.id}`;
+    const url = `${environment.domain}/api/activity/${activity.id}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
@@ -86,7 +87,7 @@ export class ActivityService {
   }
 
   public deleteActivity(activityId: string): void {
-    const url = `http://localhost:8080/api/activity/${activityId}`;
+    const url = `${environment.domain}/api/activity/${activityId}`;
 
     this.http.delete(url).subscribe((activity) => {
       this.userService.deleteActivity(activityId)
@@ -100,7 +101,7 @@ export class ActivityService {
   }
 
   public addExercise(exercise: Exercise): Observable<Activity> {
-    const url = `http://localhost:8080/api/activity/add-exercise/${this.id}`;
+    const url = `${environment.domain}/api/activity/add-exercise/${this.id}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });

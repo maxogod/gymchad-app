@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment.development'
+
 import Exercise from '../models/exercise.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivityService } from './activity.service';
@@ -46,7 +48,7 @@ export class ExerciseService {
   }
 
   public deleteExercise(exerciseId: string): void {
-    const url = `http://localhost:8080/api/exercise/${exerciseId}`;
+    const url = `${environment.domain}/api/exercise/${exerciseId}`;
 
     this.http.delete(url).subscribe((activity) => {
       const activityId = window.location.hash.split('/')[2];
@@ -62,7 +64,7 @@ export class ExerciseService {
   }
 
   public updateExercise(exercise: Exercise): void {
-    const url = `http://localhost:8080/api/exercise/${exercise.id}`;
+    const url = `${environment.domain}/api/exercise/${exercise.id}`;
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
