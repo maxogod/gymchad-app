@@ -26,6 +26,9 @@ export class UserService {
     if (!this.user$.value) {
       this.init();
     }
+    if (this.user$.value) {
+      this.isLoadingFn?.(false);
+    }
     return this.user$;
   }
 

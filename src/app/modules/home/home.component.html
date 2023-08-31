@@ -6,7 +6,9 @@
 </div>
 <div class="mb-4 pt-24 mx-10 {{ isLoading ? 'hidden' : '' }}">
   <div class="relative w-full">
-    <h1 class="text-3xl font-bold text-red-400 underline opacity-70">
+    <h1
+      class="text-3xl font-bold overflow-ellipsis w-1/3 text-red-400 underline opacity-70"
+    >
       {{ (user$ | async) ? "Hello " + (user$ | async)?.name : "Welcome" }}!
     </h1>
     <h3 class="font-bold mt-3 text-red-400 underline opacity-70">
@@ -20,7 +22,7 @@
           : 'https://i.ebayimg.com/images/g/4SgAAOSwZ3Ffsb5G/s-l1600.png'
       "
       alt="User picture"
-      class="absolute right-0 border border-red-400 rounded-lg top-0 h-full aspect-square"
+      class="absolute right-0 border border-red-400 rounded-lg top-0 h-16 sm:h-full aspect-square"
     />
 
     <button

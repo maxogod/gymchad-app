@@ -5,6 +5,7 @@ import Activity from '../models/activity.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import Exercise from '../models/exercise.model';
 import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ActivityService {
 
   private toggleIsActivityFormOpenFn: (() => void) | undefined;
 
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService, private router: Router) { }
 
   public setActivity(activity: Activity): void {
     this.activity$.next(activity);
@@ -45,7 +46,9 @@ export class ActivityService {
 
     activity.subscribe(activity => {
       if (!activity) {
-        this.activity$.next(null);
+        // this.activity$.next(null);
+        // this.isLoadingFn?.(false);
+        this.router.navigate(['/']);
         return;
       }
       this.activity$.next(activity);
