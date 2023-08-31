@@ -46,7 +46,6 @@ export class HomeComponent {
     this.user$ = this.userService.getUser();
 
     this.userService.setIsLoadingFn((isLoading: boolean) => this.isLoading = isLoading);
-    this.userService.init();
   }
 
   public deleteActivity(activityId: string) {
