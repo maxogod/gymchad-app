@@ -43,9 +43,8 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-    this.user$ = this.userService.getUser();
-
     this.userService.setIsLoadingFn((isLoading: boolean) => this.isLoading = isLoading);
+    this.user$ = this.userService.getUser();
   }
 
   public deleteActivity(activityId: string) {
