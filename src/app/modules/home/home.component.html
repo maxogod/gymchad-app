@@ -59,7 +59,7 @@
 
   <div
     *ngIf="!isAddActivityOpen && !isUpdateActivityOpen"
-    class="mt-10 w-full flex flex-wrap justify-center gap-16"
+    class="mt-10 pb-10 w-full flex flex-wrap justify-center gap-16"
   >
     <div
       *ngFor="let activity of (user$ | async)?.activities"
