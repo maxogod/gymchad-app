@@ -112,20 +112,20 @@ export class UserService {
     this.user$.next(user);
   }
 
-  public updateActivity(activity: Activity): void {
+  public updateActivity(updatedActivity: Activity): void {
     const user = this.user$.value;
     if (!user) return;
-    const activityIndex = user.activities.findIndex(activity => activity.id === activity.id);
-    user.activities[activityIndex] = activity;
+    const activityIndex = user.activities.findIndex(activity => activity.id === updatedActivity.id);
+    user.activities[activityIndex] = updatedActivity;
     this.user$.next(user);
   }
 
-  public updateExerciseFromActivity(activityId: string, exercise: Exercise): void {
+  public updateExerciseFromActivity(activityId: string, updatedExercise: Exercise): void {
     const user = this.user$.value;
     if (!user) return;
     const activityIndex = user.activities.findIndex(activity => activity.id === activityId);
-    const exerciseIndex = user.activities[activityIndex].exercises.findIndex(exercise => exercise.id === exercise.id);
-    user.activities[activityIndex].exercises[exerciseIndex] = exercise;
+    const exerciseIndex = user.activities[activityIndex].exercises.findIndex(exercise => exercise.id === updatedExercise.id);
+    user.activities[activityIndex].exercises[exerciseIndex] = updatedExercise;
     this.user$.next(user);
   }
 }
