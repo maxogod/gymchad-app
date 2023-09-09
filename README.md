@@ -1,5 +1,7 @@
 # Front-end for the [Gymchad](https://gymchad.onrender.com/) website
 
+[(checkout the backend)](https://github.com/maxogod/gymchad-server)
+
 ~ Website to organize different fitness activities such as dancing/leg day/boxing and the exercises that belong to that activity, including images of the exercise, a brief description or annotation, sets/reps or duration time.
 
 ~ For people like me, who always forget what good exercises they can do for each different activity (or muscle group), and want a more **aethetic** visual representation of them instead of writing them all on paper or something boring like that.
