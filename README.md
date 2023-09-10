@@ -1,4 +1,4 @@
-# Front-end for the [Gymchad](https://gymchad.onrender.com/) website
+# Front-end for the [Gymchad](https://gymchad.onrender.com/) ![logo](./src/favicon.ico) website
 
 [(checkout the backend)](https://github.com/maxogod/gymchad-server)
 
