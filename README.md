@@ -6,8 +6,6 @@
 
 ~ For people like me, who always forget what good exercises they can do for each different activity (or muscle group), and want a more **aethetic** visual representation of them instead of writing them all on paper or something boring like that.
 
-~ **Important: Website is hosted on [render.com](https://render.com/) free tier, so it spins down when nobody's using it and spins back up when a user enters the page but it takes a few minutes to see the page if you are that user.**
-
 ## Gymchad Tour ;)
 
 * ### Unlogged welcome page
